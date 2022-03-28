@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { AUCTION_FEE } from "./constants";
-import { IManufactureInfo } from "./manufacture";
-import { NUMBER_OF_BUNDLES } from "./numberOfBundles";
+import { AUCTION_FEE, IManufactureInfo, NUMBER_OF_BUNDLES } from "./constants";
 
 interface Props {
   manufactureName: string;

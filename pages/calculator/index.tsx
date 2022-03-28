@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { MANUFACTURES } from "../../components/calculator/manufacture";
 import Calculator from "../../components/calculator/Calculator";
+import { MANUFACTURES } from "../../components/calculator/constants";
 
 export default function CraftingCalculator() {
   const [developmentEffect, setDevelopmentEffect] = useState<number>(0); // NOTE: 영지 효과: 제작 비용 감소 퍼센트
