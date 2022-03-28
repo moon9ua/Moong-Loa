@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "./layout.module.css";
-import Sidebar from "./sidebar";
+import Navbar from "./navbar";
 
 export default function Layout({ children }: { children: any }) {
   return (
@@ -8,6 +8,8 @@ export default function Layout({ children }: { children: any }) {
       <Head>
         <title>Moong Loa</title>
       </Head>
+
+      <Navbar />
 
       <main className={styles.main}>{children}</main>
 

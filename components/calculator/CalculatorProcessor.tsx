@@ -11,7 +11,7 @@ interface ICosts {
   [key: string]: number;
 }
 
-export default function Calculator({
+export default function CalculatorProcessor({
   manufactureName,
   manufactureInfo,
   developmentEffect,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Calculator from "../../components/calculator/Calculator";
+import CalculatorProcessor from "../../components/calculator/CalculatorProcessor";
 import { MANUFACTURES } from "../../components/calculator/constants";
 
-export default function CraftingCalculator() {
+export default function Calculator() {
   const [developmentEffect, setDevelopmentEffect] = useState<number>(0); // NOTE: 영지 효과: 제작 비용 감소 퍼센트
   const [selectedKey, setSelectedKey] = useState<string>("");
 
@@ -41,7 +41,7 @@ export default function CraftingCalculator() {
       </div>
 
       {selectedKey && (
-        <Calculator
+        <CalculatorProcessor
           manufactureName={selectedKey}
           manufactureInfo={MANUFACTURES[selectedKey]}
           {...{ developmentEffect }}
