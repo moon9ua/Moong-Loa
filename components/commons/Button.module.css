@@ -1,0 +1,14 @@
+.button {
+  /* display: inline-block; */
+  /* display: inline-block; */
+  display: inline;
+  background-color: #bee488;
+  border: 0;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 10px 16px;
+}
+
+/* NOTE
+* margin을 prop에서 받아서 처리하도록 ex.mui
+*/
