@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { ITodo } from "./UnitOfTimeBlock";
+import { ITodo } from "./TodoTimeblock";
 
 interface TodoProps {
   // propContent: string; // NOTE: 추후 삭제 예정. 위에서 받아올 필요가 없다.
@@ -9,7 +9,11 @@ interface TodoProps {
   setTodos: Dispatch<SetStateAction<ITodo[]>>;
 }
 
-export default function Todo({ isNewTodo = false, todo, setTodos }: TodoProps) {
+export default function TodoItem({
+  isNewTodo = false,
+  todo,
+  setTodos,
+}: TodoProps) {
   const [editValue, setEditValue] = useState<string>(todo.content);
   const [isEditing, setIsEditing] = useState<boolean>(isNewTodo ? true : false);
   const [checked, setChecked] = useState<boolean>(false);

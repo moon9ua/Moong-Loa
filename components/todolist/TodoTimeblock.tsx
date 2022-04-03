@@ -1,30 +1,23 @@
 import { useState } from "react";
-import Todo from "./Todo";
+import { ITodo } from "../../pages/homework";
+import TodoItem from "./TodoItem";
 
-interface UnitOfTimeBlockProps {
+interface TodoTimeBlockProps {
   weekly?: boolean;
   propTitle?: string;
 }
 
-export interface ITodo {
-  id: number;
-  content: string;
-}
-
-export default function UnitOfTimeBlock({
+export default function TodoTimeBlock({
   weekly = false,
   propTitle,
-}: UnitOfTimeBlockProps) {
+}: TodoTimeBlockProps) {
   const backgroundColor = !weekly ? "yellow" : "skyblue";
-  const [todos, setTodos] = useState<ITodo[]>([
-    { id: 1, content: "test1" },
-    { id: 2, content: "test2" },
-  ]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   const [title, setTitle] = useState(propTitle ?? ""); // NOTE: 맞나?
 
   const addTodo = () => {
     const tmpTodo = "임시 할일";
-    setTodos((prev) => [...prev, { id: +new Date(), content: tmpTodo }]);
+    // setTodos((prev) => [...prev, { id: +new Date(), content: tmpTodo }]);
   };
 
   const modifyTitle = () => {
@@ -40,7 +33,7 @@ export default function UnitOfTimeBlock({
 
       <ul>
         {todos.map((todo) => (
-          <Todo
+          <TodoItem
             key={todo.id}
             // propContent={todo.content}
             // id={todo.id}

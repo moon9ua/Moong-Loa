@@ -5,9 +5,13 @@ import Navbar from "../layouts/navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <div id="portal-modal" />
+
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }
 

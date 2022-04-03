@@ -14,7 +14,7 @@ export default function Navbar() {
         <a>제작 효율 계산기</a>
       </Link>
 
-      <Link href="/todolist">
+      <Link href="/homework">
         <a>숙제 검사표</a>
       </Link>
     </nav>
