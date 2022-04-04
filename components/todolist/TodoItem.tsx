@@ -2,6 +2,9 @@ import { Dispatch, SetStateAction, useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import { HomeworkCtx } from "../../pages/homework";
 import { ITodo } from "../../pages/homework/interfaces";
+import Button from "../commons/Button";
+import Input from "../commons/Input";
+import styles from "./TodoItem.module.css";
 
 interface TodoProps {
   todo: ITodo;
@@ -24,24 +27,24 @@ export default function TodoItem({
     resetValue: resetContentInput,
   } = useInput(todo.content);
 
+  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      editTodoContent(todoListId, todoTimeblockId, todo.id, contentInput);
+      setIsEditingContent(false);
+    }
+  };
+
   return (
-    <li>
+    <li className={styles.li}>
       {isEditingContent ? (
         <>
-          <input value={contentInput} onChange={changeContentInput} />
-          <button
-            onClick={() => {
-              editTodoContent(
-                todoListId,
-                todoTimeblockId,
-                todo.id,
-                contentInput
-              );
-              setIsEditingContent(false);
-            }}
-          >
-            완료
-          </button>
+          <input type="checkbox" disabled checked={false} onChange={() => {}} />
+          <Input
+            value={contentInput}
+            onChange={changeContentInput}
+            onKeyUp={onKeyUp}
+            noBox
+          />
         </>
       ) : (
         <>
@@ -53,20 +56,20 @@ export default function TodoItem({
             }}
           />
           <span>{todo.content}</span>
-          <button
+          <Button
             onClick={() => {
               setIsEditingContent(true);
             }}
           >
             content 수정
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => {
               deleteTodo(todoListId, todoTimeblockId, todo.id);
             }}
           >
             todo 삭제
-          </button>
+          </Button>
         </>
       )}
     </li>

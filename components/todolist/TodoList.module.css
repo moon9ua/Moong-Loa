@@ -9,12 +9,36 @@
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 
   overflow-y: auto;
 }
 
 .title-container {
+  height: 30px;
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.timeblocks-container {
+  width: 100%;
+  height: 100%;
+
+  margin: 10px 0;
+  overflow-y: auto;
+}
+
+.select {
+  height: 30px;
+  /* background-color: #ededed; */
+  /* border: none; */
+  border-radius: 5px;
+}
+
+.select:focus {
+  outline: none;
 }

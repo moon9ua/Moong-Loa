@@ -1,4 +1,14 @@
 .todo-container {
   display: flex;
-  /* background-color: antiquewhite; */
+  background-color: antiquewhite;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button {
+  margin: 10px;
 }

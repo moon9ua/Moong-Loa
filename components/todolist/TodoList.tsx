@@ -1,8 +1,21 @@
+import {
+  faPlusSquare,
+  faSquarePlus,
+} from "@fortawesome/free-regular-svg-icons";
+import {
+  faCirclePlus,
+  faPen,
+  faPlus,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import useModal from "../../hooks/useModal";
 import { HomeworkCtx } from "../../pages/homework";
 import { ITodolist } from "../../pages/homework/interfaces";
+import Button from "../commons/Button";
+import Input from "../commons/Input";
 import Modal from "../commons/Modal";
 import styles from "./TodoList.module.css";
 import TodoTimeBlock from "./TodoTimeblock";
@@ -28,96 +41,91 @@ export default function TodoList({ todolist }: TodoListProps) {
   const { isModalOpened, openModal, closeModal } = useModal();
   const [selectedValue, setSelectedValue] = useState<string>("daily");
 
+  const onKeyUpEditTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      editTodolistTitle(todolist.id, EditedTitle);
+      setIsEditingTitle(false);
+    }
+  };
+  const onClickEditTitle = () => {
+    setIsEditingTitle(true);
+  };
+  const onClickDeleteTodoList = () => {
+    deleteTodolist(todolist.id);
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles["title-container"]}>
-        {isEditingTitle ? (
-          <>
-            <input value={EditedTitle} onChange={changeEditedTitle} />
-            <button
-              onClick={() => {
-                editTodolistTitle(todolist.id, EditedTitle);
-                setIsEditingTitle(false);
-              }}
-            >
-              수정 완료
-            </button>
-          </>
-        ) : (
-          <>
-            <span>{todolist.title}</span>
-            <button
-              onClick={() => {
-                setIsEditingTitle(true);
-              }}
-            >
-              제목 수정
-            </button>
-          </>
-        )}
-      </div>
-
-      {todolist.todoTimeblocks.map((timeblock) => (
-        <TodoTimeBlock
-          key={timeblock.id}
-          todoListId={todolist.id}
-          {...{ timeblock }}
-        />
-      ))}
-
-      <div>
-        <button
-          onClick={() => {
-            deleteTodolist(todolist.id);
-          }}
-        >
-          todolist 삭제
-        </button>
-
-        <button
-          onClick={() => {
-            openModal();
-          }}
-        >
-          timeblock 추가
-        </button>
-
-        {isModalOpened && (
-          <Modal {...{ closeModal }}>
+    <>
+      <div className={styles["container"]}>
+        <div className={styles["title-container"]}>
+          {isEditingTitle ? (
+            <Input
+              value={EditedTitle}
+              onChange={changeEditedTitle}
+              onKeyUp={onKeyUpEditTitle}
+              noBox
+            />
+          ) : (
             <>
-              <input value={timeblockTitle} onChange={changeTimeblockTitle} />
+              <span>{todolist.title}</span>
 
-              <select
-                value={selectedValue}
-                onChange={(e) => {
-                  setSelectedValue(e.target.value);
-                }}
-              >
-                <option value="daily">일간</option>
-                <option value="weekly">주간</option>
-              </select>
-
-              <button
-                onClick={() => {
-                  addTodoTimeblock(
-                    todolist.id,
-                    timeblockTitle,
-                    selectedValue === "weekly" ? true : false
-                  );
-
-                  // NOTE: 초기화
-                  setSelectedValue("daily");
-                  resetTimeblockTitle();
-
-                  closeModal();
-                }}
-              >
-                생성
-              </button>
+              <div>
+                <Button onClick={onClickEditTitle} noBox icon="edit" />
+                <Button onClick={onClickDeleteTodoList} noBox icon="delete" />
+              </div>
             </>
-          </Modal>
-        )}
+          )}
+        </div>
+
+        <div className={styles["timeblocks-container"]}>
+          {todolist.todoTimeblocks.map((timeblock) => (
+            <TodoTimeBlock
+              key={timeblock.id}
+              todoListId={todolist.id}
+              {...{ timeblock }}
+            />
+          ))}
+        </div>
+
+        <Button onClick={openModal} noBox icon="add" />
       </div>
-    </div>
+
+      {isModalOpened && (
+        <Modal {...{ closeModal }}>
+          <>
+            <Input value={timeblockTitle} onChange={changeTimeblockTitle} />
+
+            <select
+              value={selectedValue}
+              onChange={(e) => {
+                setSelectedValue(e.target.value);
+              }}
+              className={styles.select}
+            >
+              <option value="daily">일간</option>
+              <option value="weekly">주간</option>
+            </select>
+
+            <Button
+              onClick={() => {
+                addTodoTimeblock(
+                  todolist.id,
+                  timeblockTitle,
+                  selectedValue === "weekly" ? true : false
+                );
+
+                // NOTE: 초기화
+                setSelectedValue("daily");
+                resetTimeblockTitle();
+
+                closeModal();
+              }}
+            >
+              생성
+            </Button>
+          </>
+        </Modal>
+      )}
+    </>
   );
 }

@@ -1,12 +1,20 @@
 .button {
-  /* display: inline-block; */
-  /* display: inline-block; */
+  border-radius: 20px;
   display: inline;
   background-color: #bee488;
   border: 0;
-  border-radius: 20px;
   cursor: pointer;
-  padding: 10px 16px;
+  /* font-size: 16px; */
+  padding: 5px 10px;
+  height: 30px;
+}
+
+.no-box {
+  display: inline;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: transparent;
 }
 
 /* NOTE
