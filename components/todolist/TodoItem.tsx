@@ -1,71 +1,72 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { ITodo } from "./TodoTimeblock";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import useInput from "../../hooks/useInput";
+import { HomeworkCtx } from "../../pages/homework";
+import { ITodo } from "../../pages/homework/interfaces";
 
 interface TodoProps {
-  // propContent: string; // NOTE: 추후 삭제 예정. 위에서 받아올 필요가 없다.
-  isNewTodo?: boolean;
-
   todo: ITodo;
-  setTodos: Dispatch<SetStateAction<ITodo[]>>;
+  todoListId: number;
+  todoTimeblockId: number;
 }
 
 export default function TodoItem({
-  isNewTodo = false,
   todo,
-  setTodos,
+  todoListId,
+  todoTimeblockId,
 }: TodoProps) {
-  const [editValue, setEditValue] = useState<string>(todo.content);
-  const [isEditing, setIsEditing] = useState<boolean>(isNewTodo ? true : false);
-  const [checked, setChecked] = useState<boolean>(false);
+  const { eventHandlers } = useContext(HomeworkCtx)!;
+  const { deleteTodo, editTodoContent, toggleTodoComplete } = eventHandlers;
 
-  const completeEdit = () => {
-    setTodos((prev) =>
-      prev.map((val) => {
-        if (val.id === todo.id) {
-          val.content = editValue;
-        }
-        return val;
-      })
-    );
-
-    setIsEditing(false);
-  };
-  const startEdit = () => {
-    setIsEditing(true);
-  };
-  const updateInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setTodos((prev) =>
-    //   prev.map((val) => {
-    //     if (val.id === todo.id) {
-    //       val.content = e.target.value;
-    //     }
-    //     return val;
-    //   })
-    // );
-
-    setEditValue(e.target.value);
-  };
-  const deleteTodo = () => {
-    setTodos((prev) => prev.filter((val) => todo.id !== val.id));
-  };
-
-  const toggleCheck = () => {
-    setChecked((prev) => !prev);
-  };
+  const [isEditingContent, setIsEditingContent] = useState<boolean>(false);
+  const {
+    value: contentInput,
+    onChange: changeContentInput,
+    resetValue: resetContentInput,
+  } = useInput(todo.content);
 
   return (
     <li>
-      {isEditing ? (
+      {isEditingContent ? (
         <>
-          <input type="text" value={editValue} onChange={updateInputValue} />
-          <button onClick={completeEdit}>완료</button>
+          <input value={contentInput} onChange={changeContentInput} />
+          <button
+            onClick={() => {
+              editTodoContent(
+                todoListId,
+                todoTimeblockId,
+                todo.id,
+                contentInput
+              );
+              setIsEditingContent(false);
+            }}
+          >
+            완료
+          </button>
         </>
       ) : (
         <>
-          <input type="checkbox" checked={checked} onChange={toggleCheck} />
+          <input
+            type="checkbox"
+            checked={todo.isCompleted}
+            onChange={() => {
+              toggleTodoComplete(todoListId, todoTimeblockId, todo.id);
+            }}
+          />
           <span>{todo.content}</span>
-          <button onClick={startEdit}>수정</button>
-          <button onClick={deleteTodo}>삭제</button>
+          <button
+            onClick={() => {
+              setIsEditingContent(true);
+            }}
+          >
+            content 수정
+          </button>
+          <button
+            onClick={() => {
+              deleteTodo(todoListId, todoTimeblockId, todo.id);
+            }}
+          >
+            todo 삭제
+          </button>
         </>
       )}
     </li>

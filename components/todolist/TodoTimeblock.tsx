@@ -1,48 +1,105 @@
-import { useState } from "react";
-import { ITodo } from "../../pages/homework";
+import { useContext, useState } from "react";
+import useInput from "../../hooks/useInput";
+import useModal from "../../hooks/useModal";
+import { HomeworkCtx } from "../../pages/homework";
+import { ITodo, ITodoTimeblock } from "../../pages/homework/interfaces";
+import Modal from "../commons/Modal";
 import TodoItem from "./TodoItem";
 
 interface TodoTimeBlockProps {
-  weekly?: boolean;
-  propTitle?: string;
+  timeblock: ITodoTimeblock;
+  todoListId: number;
 }
 
 export default function TodoTimeBlock({
-  weekly = false,
-  propTitle,
+  timeblock,
+  todoListId,
 }: TodoTimeBlockProps) {
-  const backgroundColor = !weekly ? "yellow" : "skyblue";
-  const [todos, setTodos] = useState<ITodo[]>([]);
-  const [title, setTitle] = useState(propTitle ?? ""); // NOTE: 맞나?
+  const { eventHandlers } = useContext(HomeworkCtx)!;
+  const { deleteTodoTimeblock, editTodoTimeblockTitle, addTodo } =
+    eventHandlers;
 
-  const addTodo = () => {
-    const tmpTodo = "임시 할일";
-    // setTodos((prev) => [...prev, { id: +new Date(), content: tmpTodo }]);
-  };
+  const { value: timeblockTitle, onChange: changeTimeblockTitle } = useInput(
+    timeblock.title
+  );
+  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
-  const modifyTitle = () => {
-    const tmpTitle = "임시 타이틀";
-    setTitle(tmpTitle);
-  };
+  const { isModalOpened, openModal, closeModal } = useModal();
+  const {
+    value: todoContent,
+    onChange: changeTodoContent,
+    resetValue: resetTodoContent,
+  } = useInput("");
+
+  const backgroundColor = !timeblock.isWeekly ? "yellow" : "skyblue";
 
   return (
     <div style={{ backgroundColor }}>
-      {title && <span>{title}</span>}
-
-      <button onClick={modifyTitle}>제목 설정</button>
+      {isEditingTitle ? (
+        <>
+          <input value={timeblockTitle} onChange={changeTimeblockTitle} />
+          <button
+            onClick={() => {
+              editTodoTimeblockTitle(todoListId, timeblock.id, timeblockTitle);
+              setIsEditingTitle(false);
+            }}
+          >
+            수정 완료
+          </button>
+        </>
+      ) : (
+        <>
+          <span>{timeblock.title}</span>
+          <button
+            onClick={() => {
+              setIsEditingTitle(true);
+            }}
+          >
+            제목 수정
+          </button>
+        </>
+      )}
 
       <ul>
-        {todos.map((todo) => (
+        {timeblock.todos.map((todo) => (
           <TodoItem
             key={todo.id}
-            // propContent={todo.content}
-            // id={todo.id}
-            {...{ todo, setTodos }}
+            todoTimeblockId={timeblock.id}
+            {...{ todo, todoListId }}
           />
         ))}
+
+        {isModalOpened && (
+          <li>
+            <input value={todoContent} onChange={changeTodoContent} />
+            <button
+              onClick={() => {
+                addTodo(todoListId, timeblock.id, todoContent);
+                resetTodoContent();
+                closeModal();
+              }}
+            >
+              생성
+            </button>
+          </li>
+        )}
       </ul>
 
-      <button onClick={addTodo}>추가</button>
+      <button
+        onClick={() => {
+          deleteTodoTimeblock(todoListId, timeblock.id);
+        }}
+      >
+        timeblock 삭제
+      </button>
+
+      <button
+        onClick={() => {
+          openModal();
+        }}
+      >
+        todo 추가
+      </button>
     </div>
   );
 }

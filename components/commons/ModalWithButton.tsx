@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
-import styles from "./ModalWithButton.module.css";
+import Modal from "./Modal";
 
 interface ModalWithButtonProps {
   btnName: string;
@@ -24,20 +23,7 @@ export default function ModalWithButton({
     <>
       <button onClick={openModal}>{btnName}</button>
 
-      {modalOpen &&
-        createPortal(
-          <div className={styles.background} onClick={closeModal}>
-            <div
-              className={styles.content}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              {children}
-            </div>
-          </div>,
-          document.getElementById("portal-modal")!
-        )}
+      {modalOpen && <Modal {...{ closeModal }}>{children}</Modal>}
     </>
   );
 }
