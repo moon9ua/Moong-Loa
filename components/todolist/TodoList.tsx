@@ -1,14 +1,3 @@
-import {
-  faPlusSquare,
-  faSquarePlus,
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  faCirclePlus,
-  faPen,
-  faPlus,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import useModal from "../../hooks/useModal";
@@ -17,6 +6,8 @@ import { ITodolist } from "../../pages/homework/interfaces";
 import Button from "../commons/Button";
 import Input from "../commons/Input";
 import Modal from "../commons/Modal";
+import Paper from "../commons/Paper";
+import TextWithButtons from "./TextWithButtons";
 import styles from "./TodoList.module.css";
 import TodoTimeBlock from "./TodoTimeblock";
 
@@ -28,11 +19,6 @@ export default function TodoList({ todolist }: TodoListProps) {
   const { eventHandlers } = useContext(HomeworkCtx)!;
   const { deleteTodolist, editTodolistTitle, addTodoTimeblock } = eventHandlers;
 
-  const { value: EditedTitle, onChange: changeEditedTitle } = useInput(
-    todolist.title
-  );
-  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
-
   const {
     value: timeblockTitle,
     onChange: changeTimeblockTitle,
@@ -41,41 +27,24 @@ export default function TodoList({ todolist }: TodoListProps) {
   const { isModalOpened, openModal, closeModal } = useModal();
   const [selectedValue, setSelectedValue] = useState<string>("daily");
 
-  const onKeyUpEditTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      editTodolistTitle(todolist.id, EditedTitle);
-      setIsEditingTitle(false);
-    }
+  const textWithBtnEdit = (inputValue: string) => {
+    editTodolistTitle(todolist.id, inputValue);
   };
-  const onClickEditTitle = () => {
-    setIsEditingTitle(true);
-  };
-  const onClickDeleteTodoList = () => {
+  const textWithBtnDelete = () => {
     deleteTodolist(todolist.id);
   };
 
   return (
-    <>
-      <div className={styles["container"]}>
-        <div className={styles["title-container"]}>
-          {isEditingTitle ? (
-            <Input
-              value={EditedTitle}
-              onChange={changeEditedTitle}
-              onKeyUp={onKeyUpEditTitle}
-              noBox
-            />
-          ) : (
-            <>
-              <span>{todolist.title}</span>
-
-              <div>
-                <Button onClick={onClickEditTitle} noBox icon="edit" />
-                <Button onClick={onClickDeleteTodoList} noBox icon="delete" />
-              </div>
-            </>
-          )}
-        </div>
+    <div>
+      <Paper className={styles["container"]}>
+        <TextWithButtons
+          initialInput={todolist.title}
+          editFunc={textWithBtnEdit}
+          deleteFunc={textWithBtnDelete}
+          editLabel="리스트 제목 수정"
+          deleteLabel="리스트 삭제"
+          fontSize="22px"
+        />
 
         <div className={styles["timeblocks-container"]}>
           {todolist.todoTimeblocks.map((timeblock) => (
@@ -88,7 +57,7 @@ export default function TodoList({ todolist }: TodoListProps) {
         </div>
 
         <Button onClick={openModal} noBox icon="add" />
-      </div>
+      </Paper>
 
       {isModalOpened && (
         <Modal {...{ closeModal }}>
@@ -126,6 +95,6 @@ export default function TodoList({ todolist }: TodoListProps) {
           </>
         </Modal>
       )}
-    </>
+    </div>
   );
 }

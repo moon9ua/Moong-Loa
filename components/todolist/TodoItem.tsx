@@ -4,6 +4,7 @@ import { HomeworkCtx } from "../../pages/homework";
 import { ITodo } from "../../pages/homework/interfaces";
 import Button from "../commons/Button";
 import Input from "../commons/Input";
+import TextWithButtons from "./TextWithButtons";
 import styles from "./TodoItem.module.css";
 
 interface TodoProps {
@@ -20,58 +21,30 @@ export default function TodoItem({
   const { eventHandlers } = useContext(HomeworkCtx)!;
   const { deleteTodo, editTodoContent, toggleTodoComplete } = eventHandlers;
 
-  const [isEditingContent, setIsEditingContent] = useState<boolean>(false);
-  const {
-    value: contentInput,
-    onChange: changeContentInput,
-    resetValue: resetContentInput,
-  } = useInput(todo.content);
-
-  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      editTodoContent(todoListId, todoTimeblockId, todo.id, contentInput);
-      setIsEditingContent(false);
-    }
+  const contentEditFunc = (inputValue: string) => {
+    editTodoContent(todoListId, todoTimeblockId, todo.id, inputValue);
+  };
+  const todoDeleteFunc = () => {
+    deleteTodo(todoListId, todoTimeblockId, todo.id);
   };
 
   return (
-    <li className={styles.li}>
-      {isEditingContent ? (
-        <>
-          <input type="checkbox" disabled checked={false} onChange={() => {}} />
-          <Input
-            value={contentInput}
-            onChange={changeContentInput}
-            onKeyUp={onKeyUp}
-            noBox
-          />
-        </>
-      ) : (
-        <>
-          <input
-            type="checkbox"
-            checked={todo.isCompleted}
-            onChange={() => {
-              toggleTodoComplete(todoListId, todoTimeblockId, todo.id);
-            }}
-          />
-          <span>{todo.content}</span>
-          <Button
-            onClick={() => {
-              setIsEditingContent(true);
-            }}
-          >
-            content 수정
-          </Button>
-          <Button
-            onClick={() => {
-              deleteTodo(todoListId, todoTimeblockId, todo.id);
-            }}
-          >
-            todo 삭제
-          </Button>
-        </>
-      )}
+    <li className={`${styles.li} ${todo.isCompleted && styles.completed}`}>
+      <input
+        type="checkbox"
+        checked={todo.isCompleted}
+        onChange={() => {
+          toggleTodoComplete(todoListId, todoTimeblockId, todo.id);
+        }}
+      />
+
+      <TextWithButtons
+        initialInput={todo.content}
+        editFunc={contentEditFunc}
+        deleteFunc={todoDeleteFunc}
+        editLabel="To-do 내용 수정"
+        deleteLabel="To-do 삭제"
+      />
     </li>
   );
 }

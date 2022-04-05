@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .container > span { */
+/* height: 100px; */
+/* height: calc(font-size + 100px); */
+/* background-color: aqua; */
+/* } */
+
+.container > input {
+  margin-bottom: -1px; /* NOTE: input box를 1px 내려주기 위해 사용. 왜 1px 차이가 날까? */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .btn-container > button {
+  font-size: 16px;
+} */

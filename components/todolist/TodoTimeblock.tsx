@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import useModal from "../../hooks/useModal";
 import { HomeworkCtx } from "../../pages/homework";
-import { ITodo, ITodoTimeblock } from "../../pages/homework/interfaces";
+import { ITodoTimeblock } from "../../pages/homework/interfaces";
 import Button from "../commons/Button";
 import Input from "../commons/Input";
-import Modal from "../commons/Modal";
+import TextWithButtons from "./TextWithButtons";
 import TodoItem from "./TodoItem";
 import styles from "./TodoTimeblock.module.css";
 
@@ -22,11 +22,6 @@ export default function TodoTimeBlock({
   const { deleteTodoTimeblock, editTodoTimeblockTitle, addTodo } =
     eventHandlers;
 
-  const { value: timeblockTitle, onChange: changeTimeblockTitle } = useInput(
-    timeblock.title
-  );
-  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
-
   const { isModalOpened, openModal, closeModal } = useModal();
   const {
     value: todoContent,
@@ -34,18 +29,6 @@ export default function TodoTimeBlock({
     resetValue: resetTodoContent,
   } = useInput("");
 
-  const onKeyUpEditTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      editTodoTimeblockTitle(todoListId, timeblock.id, timeblockTitle);
-      setIsEditingTitle(false);
-    }
-  };
-  const onClickEditTitle = () => {
-    setIsEditingTitle(true);
-  };
-  const onDeleteTimeblock = () => {
-    deleteTodoTimeblock(todoListId, timeblock.id);
-  };
   const onAddTodo = () => {
     openModal();
   };
@@ -56,29 +39,24 @@ export default function TodoTimeBlock({
       closeModal();
     }
   };
+  const titleEditFunc = (inputValue: string) => {
+    editTodoTimeblockTitle(todoListId, timeblock.id, inputValue);
+  };
+  const titleDeleteFunc = () => {
+    deleteTodoTimeblock(todoListId, timeblock.id);
+  };
 
-  const backgroundColor = !timeblock.isWeekly ? "yellow" : "skyblue";
+  const backgroundColor = !timeblock.isWeekly ? "#FFEFEF" : "#D3DEDC";
 
   return (
     <div className={styles["container"]} style={{ backgroundColor }}>
-      <div className={styles["title-container"]}>
-        {isEditingTitle ? (
-          <Input
-            value={timeblockTitle}
-            onChange={changeTimeblockTitle}
-            noBox={true}
-            onKeyUp={onKeyUpEditTitle}
-          />
-        ) : (
-          <>
-            <span>{timeblock.title}</span>
-            <div>
-              <Button onClick={onClickEditTitle} icon="edit" noBox />
-              <Button onClick={onDeleteTimeblock} noBox icon="delete" />
-            </div>
-          </>
-        )}
-      </div>
+      <TextWithButtons
+        initialInput={timeblock.title}
+        editFunc={titleEditFunc}
+        deleteFunc={titleDeleteFunc}
+        editLabel="블록 제목 수정"
+        deleteLabel="블록 삭제"
+      />
 
       <ul className={styles["todos-container"]}>
         {timeblock.todos.map((todo) => (

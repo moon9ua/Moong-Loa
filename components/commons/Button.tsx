@@ -8,6 +8,7 @@ interface ButtonProps {
   children?: any;
   onClick?: () => void;
   noBox?: boolean;
+  fontSize?: string;
   icon?: "edit" | "delete" | "add";
 }
 
@@ -15,6 +16,7 @@ export default function Button({
   children,
   noBox,
   icon,
+  fontSize,
   ...props
 }: ButtonProps) {
   const iconList = {
@@ -24,7 +26,11 @@ export default function Button({
   };
 
   return (
-    <button className={noBox ? styles["no-box"] : styles.button} {...props}>
+    <button
+      className={noBox ? styles["no-box"] : styles.button}
+      style={{ fontSize }}
+      {...props}
+    >
       {icon ? iconList[icon] : children}
     </button>
   );

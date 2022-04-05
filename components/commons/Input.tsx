@@ -7,11 +7,12 @@ interface InputProps {
 
   noBox?: boolean;
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+
+  fontSize?: string;
 }
 
-export default function Input({ noBox, ...props }: InputProps) {
+export default function Input({ noBox, fontSize, ...props }: InputProps) {
   const className = noBox ? styles["no-box"] : styles.input;
-  console.log(className);
 
-  return <input className={className} {...props} />;
+  return <input className={className} style={{ fontSize }} {...props} />;
 }

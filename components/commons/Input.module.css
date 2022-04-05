@@ -13,11 +13,11 @@
 }
 
 .no-box {
+  /* width: 100%; */
+  width: 90%;
+
   border: none;
-  /* background-color: none; */
   background-color: transparent;
-  font-size: 16px;
-  width: 100%;
   padding: 0;
 }
 

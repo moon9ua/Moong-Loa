@@ -1,0 +1,26 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  margin: 0;
+  padding: 0;
+
+  display: block;
+  /* position: absolute; */
+  position: fixed; /* NOTE: 우선은 이렇게 구현한다. 하지만 스크롤에 맞춰 이동하지 않아서 부자연스럽다. 언젠가 수정 필요 */
+
+  background-color: #f1f1f1;
+
+  min-width: 100px;
+
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
