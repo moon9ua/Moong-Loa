@@ -8,14 +8,14 @@ config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <>
       <div id="portal-modal" />
       <div id="portal-dropdown" />
 
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </div>
+    </>
   );
 }
 
