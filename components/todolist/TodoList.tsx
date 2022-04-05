@@ -35,7 +35,7 @@ export default function TodoList({ todolist }: TodoListProps) {
   };
 
   return (
-    <div>
+    <>
       <Paper className={styles["container"]}>
         <TextWithButtons
           initialInput={todolist.title}
@@ -109,6 +109,6 @@ export default function TodoList({ todolist }: TodoListProps) {
           </div>
         </Modal>
       )}
-    </div>
+    </>
   );
 }

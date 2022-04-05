@@ -20,7 +20,7 @@ export default function Todolists() {
   const { isModalOpened, openModal, closeModal } = useModal();
 
   return (
-    <div>
+    <div className={styles["container"]}>
       <Button
         onClick={() => {
           openModal();
@@ -56,7 +56,7 @@ export default function Todolists() {
         </Modal>
       )}
 
-      <div className={styles["todo-container"]}>
+      <div className={styles["todolists"]}>
         {todolists?.map((todolist) => (
           <TodoList key={todolist.id} {...{ todolist }} />
         ))}

@@ -1,6 +1,21 @@
-.todo-container {
-  display: flex;
-  /* background-color: antiquewhite; */
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.todolists {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); */
+  grid-template-columns: repeat(auto-fill, 400px);
+  grid-template-rows: repeat(auto-fill, 400px);
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .modal-container {
