@@ -20,14 +20,25 @@ export default function Todolists() {
   const { isModalOpened, openModal, closeModal } = useModal();
 
   return (
-    <div className={styles["container"]}>
-      <Button
-        onClick={() => {
-          openModal();
-        }}
-      >
-        todolist 생성
-      </Button>
+    <>
+      <div className={styles["container"]}>
+        <div className={styles["btn-container"]}>
+          <Button
+            onClick={() => {
+              openModal();
+            }}
+          >
+            todolist 생성
+          </Button>
+          <Button onClick={() => {}}>숙제 검사표 백업</Button>
+        </div>
+
+        <div className={styles["todolists"]}>
+          {todolists?.map((todolist) => (
+            <TodoList key={todolist.id} {...{ todolist }} />
+          ))}
+        </div>
+      </div>
 
       {isModalOpened && (
         <Modal {...{ closeModal }}>
@@ -55,12 +66,6 @@ export default function Todolists() {
           </div>
         </Modal>
       )}
-
-      <div className={styles["todolists"]}>
-        {todolists?.map((todolist) => (
-          <TodoList key={todolist.id} {...{ todolist }} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
