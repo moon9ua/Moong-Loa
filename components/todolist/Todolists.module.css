@@ -4,9 +4,20 @@
 }
 
 .modal-container {
+  padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
+}
+
+.modal-container h2 {
+  margin: 0;
+}
+
+.modal-input {
+  display: flex;
+  gap: 10px;
 }
 
 .button {

@@ -61,38 +61,52 @@ export default function TodoList({ todolist }: TodoListProps) {
 
       {isModalOpened && (
         <Modal {...{ closeModal }}>
-          <>
-            <Input value={timeblockTitle} onChange={changeTimeblockTitle} />
+          <div className={styles["modal-container"]}>
+            <h2>블록 생성</h2>
 
-            <select
-              value={selectedValue}
-              onChange={(e) => {
-                setSelectedValue(e.target.value);
-              }}
-              className={styles.select}
-            >
-              <option value="daily">일간</option>
-              <option value="weekly">주간</option>
-            </select>
+            <span>
+              블록은 일간, 주간으로 리셋되는 To-do들의 집합입니다.
+              <br />
+              ex1. <b>매일 해야할 숙제들</b>이라는 블록을 만든다면, <b>일간</b>
+              으로 생성하세요.
+              <br />
+              ex2. <b>주마다 교환할 것들</b>이라는 블록을 만든다면, <b>주간</b>
+              으로 생성하세요.
+            </span>
 
-            <Button
-              onClick={() => {
-                addTodoTimeblock(
-                  todolist.id,
-                  timeblockTitle,
-                  selectedValue === "weekly" ? true : false
-                );
+            <div className={styles["modal-input"]}>
+              <Input value={timeblockTitle} onChange={changeTimeblockTitle} />
 
-                // NOTE: 초기화
-                setSelectedValue("daily");
-                resetTimeblockTitle();
+              <select
+                value={selectedValue}
+                onChange={(e) => {
+                  setSelectedValue(e.target.value);
+                }}
+                className={styles.select}
+              >
+                <option value="daily">일간</option>
+                <option value="weekly">주간</option>
+              </select>
 
-                closeModal();
-              }}
-            >
-              생성
-            </Button>
-          </>
+              <Button
+                onClick={() => {
+                  addTodoTimeblock(
+                    todolist.id,
+                    timeblockTitle,
+                    selectedValue === "weekly" ? true : false
+                  );
+
+                  // NOTE: 초기화
+                  setSelectedValue("daily");
+                  resetTimeblockTitle();
+
+                  closeModal();
+                }}
+              >
+                생성
+              </Button>
+            </div>
+          </div>
         </Modal>
       )}
     </div>

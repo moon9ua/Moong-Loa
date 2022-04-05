@@ -32,22 +32,15 @@ export default function Todolists() {
       {isModalOpened && (
         <Modal {...{ closeModal }}>
           <div className={styles["modal-container"]}>
-            <div>
-              <h3>숙제표 생성</h3>
+            <h2>리스트 생성</h2>
 
-              <span>
-                직업이 될 수도, 숙제의 종류가 될 수도 있습니다.
-                <br />
-              </span>
-              <span>
-                ex. 배틀마스터 숙제표, 에포나 할 것, 길드의뢰 모음 등등...
-                <br />
-              </span>
-            </div>
+            <span>
+              직업이 될 수도, 숙제의 종류가 될 수도 있습니다.
+              <br />
+              ex. 배틀마스터 숙제표, 에포나 할 것, 길드의뢰 모음 등등...
+            </span>
 
-            <br />
-
-            <div>
+            <div className={styles["modal-input"]}>
               <Input value={todolistTitle} onChange={changeTodolistTitle} />
               <Button
                 onClick={() => {
