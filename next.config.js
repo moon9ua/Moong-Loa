@@ -10,5 +10,8 @@ const name = "Moong-Loa";
 
 module.exports = {
   ...nextConfig,
-  assetPrefix: !debug ? `/${name}` : "",
+  assetPrefix: !debug ? `/${name}/` : "",
+  env: {
+    BACKEND_URL: debug ? "" : `/${name}`,
+  },
 };
