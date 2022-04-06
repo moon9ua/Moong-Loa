@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import { HomeworkCtx } from "../../pages/homework";
-import { ITodo } from "../../pages/homework/interfaces";
+import { ITodo } from "./interfaces";
 import Button from "../commons/Button";
 import Input from "../commons/Input";
 import TextWithButtons from "./TextWithButtons";

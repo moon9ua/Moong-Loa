@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import Todolists from "../../components/todolist/Todolists";
-import { IHomeworkContext } from "./interfaces";
-import useHomeworkEventHandlers from "./useHomeworkEventHandlers";
+import { IHomeworkContext } from "../../components/todolist/interfaces";
+import useHomeworkEventHandlers from "../../components/todolist/useHomeworkEventHandlers";
 
 export const HomeworkCtx = createContext<IHomeworkContext | null>(null);
 

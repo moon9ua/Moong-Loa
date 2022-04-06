@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import useInput from "../../hooks/useInput";
 import useModal from "../../hooks/useModal";
 import { HomeworkCtx } from "../../pages/homework";
-import { ITodolist } from "../../pages/homework/interfaces";
+import { ITodolist } from "./interfaces";
 import Button from "../commons/Button";
 import Input from "../commons/Input";
 import Modal from "../commons/Modal";
