@@ -7,7 +7,7 @@ export default function Navbar() {
       {/* <input className={styles.input} placeholder="Search..." /> */}
 
       <Link href="/">
-        <a>Home (로고?)</a>
+        <a>Home</a>
       </Link>
 
       <Link href="/calculator">
