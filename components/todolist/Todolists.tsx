@@ -22,6 +22,12 @@ export default function Todolists() {
   return (
     <>
       <div className={styles["container"]}>
+        <div className={styles["todolists"]}>
+          {todolists?.map((todolist) => (
+            <TodoList key={todolist.id} {...{ todolist }} />
+          ))}
+        </div>
+
         <div className={styles["btn-container"]}>
           <Button
             onClick={() => {
@@ -31,12 +37,6 @@ export default function Todolists() {
             todolist 생성
           </Button>
           <Button onClick={() => {}}>숙제 검사표 백업</Button>
-        </div>
-
-        <div className={styles["todolists"]}>
-          {todolists?.map((todolist) => (
-            <TodoList key={todolist.id} {...{ todolist }} />
-          ))}
         </div>
       </div>
 
