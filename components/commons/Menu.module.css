@@ -1,11 +1,5 @@
 .dropdown {
-  position: relative;
   display: inline-block;
-
-  /* display: flex; */
-  /* display: inline-flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 
 .dropdown button {
@@ -19,9 +13,7 @@
   padding: 0;
 
   display: block;
-  /* position: absolute; */
-  position: fixed;
-  /* NOTE: 우선은 이렇게 구현한다. 하지만 스크롤에 맞춰 이동하지 않아서 부자연스럽다. 언젠가 수정 필요 */
+  position: absolute;
 
   background-color: #f1f1f1;
 

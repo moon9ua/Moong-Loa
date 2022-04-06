@@ -13,11 +13,19 @@ interface MenuProps {
 
 export default function Menu({ btnName, children, isIcon }: MenuProps) {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+  const [x, setX] = useState<number>(0);
+  const [y, setY] = useState<number>(0);
+
+  if (typeof window === "undefined") return <></>;
+  const el = document.getElementById("portal-dropdown");
+  if (!el) return <></>;
 
   return (
     <div className={styles.dropdown}>
       <button
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          setX(e.clientX);
+          setY(e.clientY);
           setIsMenuOpened((prev) => !prev);
         }}
         onBlur={() => {
@@ -27,9 +35,16 @@ export default function Menu({ btnName, children, isIcon }: MenuProps) {
         {isIcon ? <FontAwesomeIcon icon={faEllipsisVertical} /> : btnName}
       </button>
 
-      {isMenuOpened && (
-        <ul className={styles["dropdown-content"]}>{children}</ul>
-      )}
+      {isMenuOpened &&
+        createPortal(
+          <ul
+            className={styles["dropdown-content"]}
+            style={{ top: y, left: x }}
+          >
+            {children}
+          </ul>,
+          el
+        )}
     </div>
   );
 }

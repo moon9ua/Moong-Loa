@@ -1,6 +1,4 @@
 .container {
-  /* background-color: aqua; */
-  /* margin: 15px 0; */
   padding: 15px;
   border-radius: 1rem;
 }
@@ -18,7 +16,4 @@
 
 .li {
   display: flex;
-  /* background-color: aqua; */
-  /* list-style: none; */
-  /* margin: 5px 0; */
 }
