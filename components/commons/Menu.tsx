@@ -16,15 +16,17 @@ export default function Menu({ btnName, children, isIcon }: MenuProps) {
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
 
-  const onScroll = () => {
-    setIsMenuOpened(false);
-  };
-
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const onScroll = () => {
+      if (!isMenuOpened) return;
+      setIsMenuOpened(false);
+    };
+
     window.addEventListener("scroll", onScroll, true);
     return () => window.removeEventListener("scroll", onScroll, true);
-  }, []);
+  }, [isMenuOpened]);
 
   if (typeof window === "undefined") return <></>;
   const el = document.getElementById("portal-dropdown");
