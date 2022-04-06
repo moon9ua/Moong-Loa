@@ -1,6 +1,0 @@
-.main {
-  display: flex;
-  min-height: calc(100vh - 80px);
-  background-color: rgba(190, 228, 136, 0.2);
-  padding: 30px;
-}
